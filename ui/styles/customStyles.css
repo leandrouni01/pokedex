@@ -1,0 +1,21 @@
+.checkPokemon{
+    display: none !important;
+}
+
+.pokeball{
+    display: inline-block;
+    background-image: url(../images/pokeball-abierta-sin-fondo.png);
+    background-size: auto 100%;
+    width:  4rem;
+    height: 4rem;
+    background-repeat: no-repeat;
+}
+
+.checkPokemon:checked + .pokeball{
+    display: inline-block;
+    background-image: url(../images/pokeball-cerrada-sin-fondo.png);
+    background-size: auto 100%;
+    width:  3.2rem;
+    height: 3.2rem;
+    background-repeat: no-repeat;
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link href="./styles/normalize.css" rel="stylesheet">
+    <link href="./styles/skeleton.css" rel="stylesheet">
+    <link href="./styles/customStyles.css" rel="stylesheet">
+    <script src="./src/app.js"></script>
+    <title>Pokemon</title>
+</head>
+
+<body>
+    <div class="container">
+        <!--<h1>hola</h1>
+        <button type="button" onClick='chooseBulbasaur()'>Choose bulbasaur</button>
+        <div id="bulbasaur">
+        </div>-->
+        <form onsubmit="return formData(event)">
+            <div class="row">
+                <div class="columns twelve">
+                    <label for="pokemonName" >Ingrese el nombre del pokemon</label>
+                    <input type="text" id="pokemonName" required="required">
+                </div>
+            </div>
+            <button type="submit">Consultar</button>
+        </form>
+        <div class="row">
+            <div id="pokemonResult" class="columns twelve">
+
+            </div>
+        </div>
+        <div class="row">
+            <button onClick="return listFavourites()" id="listFavourites">Listar Favoritos</button>
+            <button onClick="return saveFavourites()" id="saveFavourites">Guardar Favoritos</button>
+        </div>
+        <div class="row">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sprite</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Wheight</th>
+                        <th>Abilities</th>
+                        <th>Species</th>
+                        <th>Favourite</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyFavourites">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
