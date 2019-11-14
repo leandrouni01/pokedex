@@ -1,9 +1,9 @@
-const express = require('express');
+const functions = require('../route-functions/route-functions');
 
-const router = express.Router();
+//console.log(functions.listFavPokemon(),functions.saveFavPokemon(),functions.deleteFavPokemon());
 
-router.get('/',(req,res)=>{
-    res.json({message: "welcome"});
-});
-
-module.exports= router;
+module.exports = (app)=>{
+    app.get('/list-favourites', functions.listFavPokemon);
+    app.post('/save-favourite', functions.saveFavPokemon);
+    app.delete('/delete-favourite',functions.deleteFavPokemon);
+}

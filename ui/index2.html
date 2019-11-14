@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--<link href="./styles/normalize.css" rel="stylesheet">
+    <link href="./styles/skeleton.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="./styles/customStyles.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Pokemon</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="nine columns">
+                <div class="row">
+                    <form onsubmit="return searchPokemon(event)">
+                        <div class="row">
+                            <div class="columns twelve">
+                                <label for="pokemonName">Ingrese el nombre del pokemon</label>
+                                <input type="text" id="pokemonName" required="required">
+                                <button type="submit">Consultar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="columns" id="scrollBox">
+
+                        <div id="pokemonListContainer">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button id="listTenPokemon" onclick="listTenPokemon()">Listar 10 Pokemon</button>
+                </div>
+            </div>
+            <div class="three columns">
+                <div id="pokemonInfo">
+                    <img id="imgPkmnInfo" src="./images/interrogacion.png" alt="Signo de interrogacion">
+                    <dl>
+                        <dt>Name</dt>
+                        <dd>???</dd>
+                        <dt>Types</dt>
+                        <dd>???</dd>
+                        <dt>Abilities</dt>
+                        <dd>???</dd>
+                        <dt>Weight</dt>
+                        <dd>???</dd>
+                        <dt>Species</dt>
+                        <dd>???</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./src/app2.js"></script>
+</body>
+
+</html>

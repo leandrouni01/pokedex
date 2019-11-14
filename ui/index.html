@@ -5,57 +5,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!--<link href="./styles/normalize.css" rel="stylesheet">
+    <link href="./styles/skeleton.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="./styles/customStyles.css">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <link href="./styles/normalize.css" rel="stylesheet">
-    <link href="./styles/skeleton.css" rel="stylesheet">
-    <link href="./styles/customStyles.css" rel="stylesheet">
-    <script src="./src/app.js"></script>
     <title>Pokemon</title>
 </head>
 
 <body>
-    <div class="container">
-        <!--<h1>hola</h1>
-        <button type="button" onClick='chooseBulbasaur()'>Choose bulbasaur</button>
-        <div id="bulbasaur">
-        </div>-->
-        <form onsubmit="return formData(event)">
-            <div class="row">
-                <div class="columns twelve">
-                    <label for="pokemonName" >Ingrese el nombre del pokemon</label>
-                    <input type="text" id="pokemonName" required="required">
-                </div>
-            </div>
-            <button type="submit">Consultar</button>
-        </form>
-        <div class="row">
-            <div id="pokemonResult" class="columns twelve">
+    <div id="container">
+        <div id="search">
+            <form onsubmit="return searchPokemon(event)">
+                <input type="text" id="pokemonName" placeholder="Buscar Pokemon" required="required">
+                <button type="submit">Consultar</button>
+            </form>
+        </div>
+        <div id="pokemonInfo">
+            <img id="imgPkmnInfo" src="./images/interrogacion.png" alt="Signo de interrogacion">
+            <ul>
+                <li><b>Name:</b> ???</li>
+                <li><b>Types:</b> ???</li>
+                <li><b>Abilities:</b> ???</li>
+                <li><b>Weight:</b> ???</li>
+                <li><b>Species:</b> ???</li>
+            </ul>
+        </div>
+        <div id="scrollPokelist">
+            <div id="pokemonListContainer">
 
             </div>
         </div>
-        <div class="row">
-            <button onClick="return listFavourites()" id="listFavourites">Listar Favoritos</button>
-            <button onClick="return saveFavourites()" id="saveFavourites">Guardar Favoritos</button>
+        <div id="buttons">
+            <button id="listTenPokemon" onclick="listTenPokemon()">Listar 10 Pokemon</button>
         </div>
-        <div class="row">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Sprite</th>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Wheight</th>
-                        <th>Abilities</th>
-                        <th>Species</th>
-                        <th>Favourite</th>
-                    </tr>
-                </thead>
-                <tbody id="tbodyFavourites">
+        <div id="savefavs">
+            <button onclick="return saveFavs()">Guardar Favoritos</button>
+        </div>
+        <div id="scrollPokebox">
+            <div id="pokebox">
 
-                </tbody>
-            </table>
+            </div>
         </div>
+
     </div>
+    <script src="./src/app2.js"></script>
 </body>
-</html>
 
+</html>
