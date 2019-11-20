@@ -1,7 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
-const routes = require('./routes/users');
-const bodyParser = require('body-parser');
+const routes = require('./routes/routes');
 
 const app = express();
 
@@ -12,11 +11,8 @@ app.use((req, res, next) => {
     res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
     next();
 });
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
-
-
-//app.use(express.json());
+app.use(express.bodyParser.urlencoded({extended: true}));
+app.use(express.json());
 app.use(morgan('dev'));
 app.set('port', process.env.PORT || 3000);
 

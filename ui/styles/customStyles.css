@@ -9,12 +9,11 @@ html{
     display: grid;
     gap: 0.5rem;
     grid-template-columns: 70% 30%;
-    grid-template-rows: 1fr 0.5fr 5fr 0.2fr 2.8fr;
+    grid-template-rows: 1fr 0.5fr 5fr 3fr;
     grid-template-areas: 
     "search  pokeinfo"
     "button pokeinfo"
     "pokelist pokeinfo"
-    "pokelist otherbutton"
     "pokelist pokebox";
 }
 
@@ -69,7 +68,7 @@ html{
 }
 
 #scrollPokebox{
-    max-height: 10rem;
+    max-height: 11rem;
     border: 1px solid black;
     overflow: auto;
 }
