@@ -1,64 +1,133 @@
-(()=>{
+(() => {
     document.getElementById("login").style.display = "block";
+    listUsers();
 })()
 
-function login(e){
+function login(e) {
     e.preventDefault();
     const user = document.querySelector("#user").value;
     const password = document.querySelector("#password").value;
 
-    fetch('http://localhost:3000/login',
-    {
-        method: 'POST',
-        body: JSON.stringify({ user: user, password: password }),
-        headers: {
-          'Content-Type': 'application/json'}
-    }).then(res=>{
-        
-    }).catch(err=>{
-
-    })
+    fetch('/login',
+        {
+            method: 'POST',
+            body: JSON.stringify({ user: user, password: password }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => {
+            if (res.status == 200) {
+                return res.json();
+            } else {
+                return { errStatus: res.status };
+            }
+        }).then(res => {
+            if (res.errStatus) {
+                handleError(res.errStatus);
+            } else {
+                localStorage.setItem("pkmnItoken", res.token);
+                window.location.replace('./addpokemon.html');
+            }
+        }).catch(err => {
+            console.log(err);
+        })
 }
 
-function register(e){
+function register(e) {
     e.preventDefault();
     const user = document.querySelector("#user2").value;
     const password = document.querySelector("#password2").value;
     const repeatPassword = document.querySelector("#repeatPassword2").value;
-    if(password == repeatPassword){
-        fetch('http://localhost:3000/register',{
+    if (password == repeatPassword) {
+        fetch('/register', {
             method: 'POST',
             body: JSON.stringify({ user: user, password: password }),
             headers: {
-                'Content-Type': 'application/json'}
-        }).then(res=>{
-
-        }).catch(err=>{
-
+                'Content-Type': 'application/json'
+            }
+        }).then(res => {
+            if (res.status == 200) {
+                return res.json();
+            } else {
+                return { errStatus: res.status };
+            }
+        }).then(res => {
+            if (res.errStatus) {
+                handleError(res.errStatus);
+            } else {
+                localStorage.setItem("pkmnItoken", res.token);
+                window.location.replace('./addpokemon.html');
+            }
+        }).catch(err => {
+            console.log(err);
         })
-    }else{
+    } else {
         alert("Las contraseñas no coinciden");
+    }
+};
+
+
+function changeTab(evt, tabName) {
+    const tabcontent = document.getElementsByClassName("tabcontent");
+    const tablinks = document.getElementsByClassName("tablinks");
+
+    for (let i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    for (let i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.classList.toggle("active");
+}
+
+function handleError(errStatus) {
+    switch (errStatus) {
+        case 404:
+            alert("El usuario o la contraseña son incorrectos");
+            break;
+        case 409:
+            alert("Ese nombre de usuario ya esta en uso");
+            break;
+        case 500:
+            alert("Hubo un error en el servidor");
+            break;
+        default:
+            alert("Algo salio mal");
+            break;
     }
 }
 
 
-function changeTab(evt, cityName) {
-    // Declare all variables
-    var i, tabcontent, tablinks;
-  
-    // Get all elements with class="tabcontent" and hide them
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
-    }
-  
-    // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-  
-    // Show the current tab, and add an "active" class to the button that opened the tab
-    document.getElementById(cityName).style.display = "block";
-    evt.currentTarget.className += " active";
-  }
+function listUsers() {
+    fetch('/list-users',
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => {
+            if (res.status == "200") return res.json();
+        })
+        .then(data => {
+            fillTable(data);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+}
+
+function fillTable(data) {
+    const tbody = document.querySelector("#tbody");
+    data.forEach(user => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${user.user_name}</td>
+            <td>${user.poke_number}</td>
+        `;
+        tbody.append(tr);
+    });
+}
+

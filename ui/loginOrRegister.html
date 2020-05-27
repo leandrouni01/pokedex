@@ -15,7 +15,7 @@
             <div class="columns twelve">
                 <div class="tab">
                     <button type="button" class="tablinks active" onclick="changeTab(event, 'login')">Log In</button>
-                    <button type="button" class="tablinks" onclick="changeTab(event, 'register')">Register</button>
+                    <button type="button" class="tablinks" onclick="changeTab(event, 'register')">Registrarse</button>
                 </div>
                 <div id="login" class="tabcontent">
                     <form onsubmit="return login(event)">
@@ -32,7 +32,7 @@
                                 <label for="password">Contraseña</label>
                             </div>
                             <div class="columns nine">
-                                <input required type="password" name="password" id="password">
+                                <input required type="password" maxlength="20" name="password" id="password">
                             </div>
                         </div>
                         <div class="row">
@@ -57,7 +57,7 @@
                                 <label for="password">Contraseña</label>
                             </div>
                             <div class="columns nine">
-                                <input required type="password" name="password" id="password2">
+                                <input required maxlength="20" type="password" name="password" id="password2">
                             </div>
                         </div>
                         <div class="row">
@@ -65,7 +65,7 @@
                                 <label for="repeatPassword">Repita la Contraseña</label>
                             </div>
                             <div class="columns nine">
-                                <input required type="password" name="repeatPassword" id="repeatPassword2">
+                                <input required maxlength="20" type="password" name="repeatPassword" id="repeatPassword2">
                             </div>
                         </div>
                         <div class="row">
@@ -75,6 +75,21 @@
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="columns twelve">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>N° de Pokemon en coleccion</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

@@ -1,18 +1,44 @@
 let id = 1;
-let favourites = [];
+let favourites;
+
 String.prototype.firstToUpperCase = function firstToUpperCase() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
-window.addEventListener('load', event => {
-    axios.get('http://localhost:3000/list-favourites')
+(() => {
+    verifyToken();
+    fillFavBox();
+})();
+
+function verifyToken(){
+    const token = localStorage.getItem("pkmnItoken");
+    if (token) {
+        axios.post("/verify",
+            {
+                token: token
+            }).then((res) => {
+                document.querySelector("#user_name").innerHTML = res.data.user_name;
+            }).catch(err => {
+                window.location.replace("./loginOrRegister.html");
+            });
+    } else {
+        window.location.replace("./loginOrRegister.html");
+    }
+}
+
+function fillFavBox(){
+    axios.get('/list-favourites', {
+        headers: {
+            "Authorization": "Bearer "+localStorage.getItem("pkmnItoken")
+        }
+    })
         .then(res => res.data)
         .then(data => {
             favourites = [...data];
-            data.forEach(item => addToBoxInLoad(item));
-        }).catch(err => console.log(err));
-});
-
+            data.forEach(item => addToBox(item));
+        })
+        .catch(err => console.log(err));
+}
 
 function listTenPokemon() {
     if (id <= 802) {
@@ -42,14 +68,14 @@ function handleResponses(responses) {
             console.log(item.reason);
         }
     });
-}
+};
 
 function addToList(data) {
     const list = document.querySelector("#pokemonListContainer");
     const div = document.createElement("div");
     div.classList.add("card");
     div.innerHTML =
-        `<span onClick="showPokemonFromList(this)" data-id="${data.id}" 
+        `<span onClick="showInfo(this,'guardar')" data-id="${data.id}" 
                data-name="${data.name.firstToUpperCase()}" 
                data-types="${data.types.map(item => item.type.name.firstToUpperCase()).reverse().join(", ")}"
                data-abilities="${data.abilities.map(item => item.ability.name.firstToUpperCase()).reverse().join(", ")}"
@@ -61,56 +87,12 @@ function addToList(data) {
     list.append(div);
 };
 
-function showPokemonFromList(span) {
-    const div = document.querySelector("#pokemonInfo");
-    const dataset = span.dataset;
-    div.innerHTML = `
-    <img id="imgPkmnInfo" 
-    src="${"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + dataset.id + ".png"}"
-    alt="${dataset.species}">
-    <ul>
-        <li><b>Name:</b> ${dataset.name}</li>
-        <li><b>Types:</b> ${dataset.types}</li>
-        <li><b>Abilities:</b> ${dataset.abilities}</li>
-        <li><b>Weight:</b> ${dataset.weight}</li>
-        <li><b>Species:</b> ${dataset.species}</li>
-    </ul>
-    <button onclick="addToFavourites(this)"
-            data-id="${dataset.id}">
-            Agregar a caja de Favoritos
-    </button>
-    `;
-}
-
-function showPokemonFromBox(span) {
-    const div = document.querySelector("#pokemonInfo");
-    const dataset = span.dataset;
-    div.innerHTML = `
-    <img id="imgPkmnInfo" 
-    src="${"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + dataset.id + ".png"}"
-    alt="${dataset.species}">
-    <ul>
-        <li><b>Name:</b> ${dataset.name}</li>
-        <li><b>Types:</b> ${dataset.types}</li>
-        <li><b>Abilities:</b> ${dataset.abilities}</li>
-        <li><b>Weight:</b> ${dataset.weight}</li>
-        <li><b>Species:</b> ${dataset.species}</li>
-    </ul>
-    <button onclick="removeFromFavourites(this)"
-            data-id_fav="${dataset.id_fav}">
-            Quitar de la caja de Favoritos
-    </button>
-    `;
-}
-
-
-
 function addToFavourites(button) {
-    if (favourites.filter(item => String(item.pokemon_id) === button.dataset.id).length < 2) {
+    if (favourites.filter(item => String(item.id) === button.dataset.id).length < 2) {
         axios.get(`https:/pokeapi.co/api/v2/pokemon/${button.dataset.id}`)
             .then(res => res.data)
             .then(data => {
-                axios.post('http://localhost:3000/save-favourite',
+                axios.post('/save-favourite',
                     {
                         id: data.id,
                         name: data.name.firstToUpperCase(),
@@ -119,20 +101,25 @@ function addToFavourites(button) {
                         weight: data.weight,
                         species: data.species.name.firstToUpperCase(),
                         sprite: data.sprites.front_default
-                    }).then(res=>{
-                        data.id_fav= res.data.insertId;
-                        addToBox(data);
-                        favourites.push({
-                            pokemon_id: data.id,
-                            name: data.name.firstToUpperCase(),
-                            types: data.types.map(item => item.type.name.firstToUpperCase()).reverse().join(", "),
-                            abilities: data.abilities.map(item => item.ability.name.firstToUpperCase()).reverse().join(", "),
-                            weight: data.weight,
-                            species: data.species.name.firstToUpperCase(),
-                            sprite: data.sprites.front_default,
-                            id_fav: res.data.insertId
-                        });
+                    }, {
+                    headers: {
+                        "Authorization": "Bearer "+localStorage.getItem("pkmnItoken")
+                    }
+                }).then(res => {
+                    data = handleData(data);
+                    data.id_fav = res.data.insertId;
+                    addToBox(data);
+                    favourites.push({
+                        id: data.id,
+                        name: data.name,
+                        types: data.types,
+                        abilities: data.abilities,
+                        weight: data.weight,
+                        species: data.name,
+                        sprite: data.img,
+                        id_fav: data.id_fav
                     });
+                });
             });
     } else {
         alert("No se puede tener mas de dos pokemon de la misma especie en la caja");
@@ -144,49 +131,41 @@ function addToBox(data) {
     const div = document.createElement("div");
     div.classList.add("card");
     div.innerHTML =
-        `<span onClick="showPokemonFromBox(this)" data-id="${data.id}" 
-               data-name="${data.name.firstToUpperCase()}" 
-               data-types="${data.types.map(item => item.type.name.firstToUpperCase()).reverse().join(", ")}"
-               data-abilities="${data.abilities.map(item => item.ability.name.firstToUpperCase()).reverse().join(", ")}"
+        `<span onClick="showInfo(this,'eliminar')" data-id="${data.id}"
+               data-name="${data.name}" 
+               data-types="${data.types}"
+               data-abilities="${data.abilities}"
                data-weight="${data.weight}"
-               data-species="${data.species.name.firstToUpperCase()}"
+               data-species="${data.species}"
                data-id="${data.id}"
                data-id_fav="${data.id_fav}">
-            <img src=${"./images/box-sprites/" + ("00" + data.id).slice(-3) + "MS.png"} alt=${data.species.name.firstToUpperCase()}>
+            <img src=${"./images/box-sprites/" + ("00" + data.id).slice(-3) + "MS.png"} alt=${data.species}>
         </span>`;
     box.append(div);
 };
 
-function removeFromFavourites(button){
+function removeFromFavourites(button) {
     axios({
         method: "DELETE",
-        url: 'http://localhost:3000/delete-favourite',
+        url: '/delete-favourite',
         data: {
             id: button.dataset.id_fav
+        },
+        headers: {
+            "Authorization": "Bearer "+localStorage.getItem("pkmnItoken")
         }
-    }).then(res=>{
+    }).then(res => {
         const pokeCard = document.querySelector(`span[data-id_fav="${button.dataset.id_fav}"]`).parentElement;
+        favourites.splice(favourites.findIndex(item => { return item.id_fav == button.dataset.id_fav }), 1);
         pokeCard.parentElement.removeChild(pokeCard);
         showNonePokemon();
+    }).catch(err=>{
+        if(err.response.data.sqlState=='23000'){
+            alert("No se puede eliminar a un pokemon que esta en el equipo");
+        }else{
+            console.log(err);
+        }
     });
-}
-
-function addToBoxInLoad(data){
-    const box = document.querySelector("#pokebox");
-    const div = document.createElement("div");
-    div.classList.add("card");
-    div.innerHTML =
-        `<span onClick="showPokemonFromBox(this)" data-id="${data.pokemon_id}" 
-               data-name="${data.pokemon_name}" 
-               data-types="${data.pokemon_types}"
-               data-abilities="${data.pokemon_abilities}"
-               data-weight="${data.pokemon_weight}"
-               data-species="${data.pokemon_species}"
-               data-id="${data.pokemon_id}"
-               data-id_fav="${data.id_fav}">
-            <img src=${"./images/box-sprites/" + ("00" + data.pokemon_id).slice(-3) + "MS.png"} alt=${data.pokemon_species}>
-        </span>`;
-    box.append(div);
 }
 
 function searchPokemon(e) {
@@ -194,8 +173,7 @@ function searchPokemon(e) {
     const name = document.querySelector("#pokemonName").value;
     setAsLoading();
     axios.get(`https:/pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`).then(res => res.data).then(data => {
-        console.log(data);
-        showPokemonFromSearch(data);
+        showInfo(handleData(data),"guardar");
     }).catch(err => {
         console.log(err);
         handleError(err.response.status);
@@ -204,8 +182,10 @@ function searchPokemon(e) {
 
 function setAsLoading() {
     document.querySelector("#pokemonInfo").innerHTML = `
+    <figure id="CImgPkmnInfo">
     <img id="imgPkmnInfo" src="./images/loading.gif" alt="Loading">
-    <h4>Buscando</h4>
+    <figcaption><b>Buscando<b/></figcaption>
+    </figure>
     `;
 }
 
@@ -228,33 +208,68 @@ function printErr(err) {
     alert(err);
 }
 
-function showNonePokemon(){
+function showNonePokemon() {
     document.querySelector("#pokemonInfo").innerHTML = `
-    <img id="imgPkmnInfo" src="./images/interrogacion.png" alt="Signo de interrogacion">
-    <ul>
-        <li><b>Name:</b> ???</li>
-        <li><b>Types:</b> ???</li>
-        <li><b>Abilities:</b> ???</li>
-        <li><b>Weight:</b> ???</li>
-        <li><b>Species:</b> ???</li>
-    </ul>`;
+        <figure id="CImgPkmnInfo">
+            <img id="imgPkmnInfo" src="./images/interrogacion.png" alt="Signo de interrogacion">
+        </figure>
+        <div id="pkmnDescription">
+            <p>Species: ???</p>
+            <p>Weight: ???</p>
+        </div>
+        <div id="types">
+            <span>???</span><span>???</span>
+        </div>
+        <div id="abilities">
+            <div>???</div>
+            <div>???</div>
+        </div>
+        `;
 }
 
-function showPokemonFromSearch(data) {
+function logOut() {
+    localStorage.removeItem("pkmnItoken");
+    window.location.replace('./loginOrRegister.html');
+};
+
+
+function showInfo(data, action) {
+    if(data.dataset){
+        data = data.dataset;
+    }
     const div = document.querySelector("#pokemonInfo");
     div.innerHTML = `
-    <img id="imgPkmnInfo" src="${data.sprites.front_default}" alt="${data.species.name.firstToUpperCase()}">
-    <ul>
-        <li><b>Name:</b> ${data.name.firstToUpperCase()}</li>
-        <li><b>Types:</b> ${data.types.map(item => item.type.name.firstToUpperCase()).reverse().join(", ")}</li>
-        <li><b>Abilities:</b> ${data.abilities.map(item => item.ability.name.firstToUpperCase()).reverse().join(", ")}</li>
-        <li><b>Weight:</b> ${data.weight}</li>
-        <li><b>Species:</b> ${data.species.name.firstToUpperCase()}</li>
-    </ul>
-    <button onclick="addToFavourites(this)"
-            data-id="${data.id}">
-            Agregar a caja de Favoritos
-    </button>
-    `;
+        <figure id="CImgPkmnInfo">
+            <img id="imgPkmnInfo" src="${"https://www.cpokemon.com/pokes/anime/" + data.id + ".png"}" alt="${data.species}">
+        </figure>
+        <div id="pkmnDescription">
+            <div>Species: ${data.species}</div>
+            <div>Weight: ${data.weight}</div>
+        </div>
+        <div id="types">
+        ${data.types.split(", ").map(type=>`<span class="pkmType ${type}">${type}</span> `).join("")}
+        </div>
+        <div id="abilities">
+            <div><b>Abilities:</b></div>
+            ${data.abilities.split(", ").map(ability=>`<div>${ability}</div>`).join("")}
+        </div>
+        <div id="manage">
+            <button onclick="${action == "guardar" ? "addToFavourites(this)": "removeFromFavourites(this)"}"
+            ${action=="guardar"? "data-id='"+data.id+"'": "data-id_fav='"+data.id_fav+"'"}>
+            ${action=="guardar" ? "Agregar pokemon a la caja": "Quitar pokemon de la caja"}</button>
+        </div>`;
+};
+
+
+function handleData(data){
+    const newData = {};
+    newData.name= data.name.firstToUpperCase();
+    newData.types= data.types.map(item => item.type.name.firstToUpperCase()).reverse().join(", ");
+    newData.abilities= data.abilities.map(item => item.ability.name.firstToUpperCase()).reverse().join(", ");
+    newData.weight= data.weight;
+    newData.species = data.species.name.firstToUpperCase();
+    newData.id = data.id;
+    newData.img = data.sprites.front_default;
+    return newData;
 }
 

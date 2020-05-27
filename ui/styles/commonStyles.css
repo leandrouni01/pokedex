@@ -1,0 +1,153 @@
+.card{
+    border-radius: 1rem;
+    box-shadow: 0.1rem 0.1rem 0.5rem  #bbb;
+    transition: 0.3s;
+}
+
+.card:hover{
+    box-shadow: 0.1rem 0.1rem 0.9rem  #777;
+    cursor: pointer;
+}
+
+.card img{
+    width: 100%;
+    height: 100%;
+}
+
+.card span{
+    width: 100%;
+    height: 100%;
+}
+
+#navbar{
+    background-color: #eee;
+    padding: 0px 10px;
+}
+#navbar ul{
+    list-style: none;
+}
+
+#navbar ul li {
+    display: inline-block;
+}
+
+.pkmType{
+    display: inline-block;
+    padding: 1px;
+    border-radius: 5px;
+    color: white;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.Grass{
+    border-color: #c7e2b4;
+    background-color: #7dc95a;
+}
+
+.Poison{
+    background-color: #98618e;
+}
+
+.Fire{
+    background-color: #cb5535;
+    border-color: #ffae9a solid 1px;
+}
+
+.Steel{
+    background-color: #bab9c2;
+    border-color: #dedde0;
+}
+
+.Water{
+    background-color: #3899f3;
+    border-color: #abdbfd;
+}
+
+.Bug{
+    background-color: #a6b541;
+    border-color: #d9dda9;
+}
+
+.Dragon{
+    background-color: #907edf;
+    border-color: #c2bbeb;
+}
+
+.Electric{
+    background-color: #fddb80;
+    border-color: #fde8a7;
+}
+
+.Ghost{
+    background-color: #6a679c;
+    border-color: #bdbde3;
+}
+
+.Fairy{
+    background-color: #f9bcf7;
+    border-color: #ffcbfd;
+}
+
+.Ice{
+    background-color: #a9effe;
+    border-color: #c4f7fe;
+}
+
+.Fighting{
+    background-color: #a85c52;
+    border-color: #e5b5ab;
+}
+
+.Normal{
+    background-color: #cbc2bc;
+    border-color: #e7e2dc;
+}
+
+.Psychic{
+    background-color: #e87da1;
+    border-color: #ecc0cd;
+}
+
+.Rock{
+    background-color: #bdab62;
+    border-color: #e8d699;
+}
+
+.Dark{
+    background-color: #837265;
+    border-color: #c2b3ac;
+}
+
+.Ground{
+    background-color: #d7be56;
+    border-color: #f1e2b1;
+}
+
+.Flying{
+    background-color: #6e97e4;
+    border-color: #d0ddee;
+}
+
+.None{
+    background-color: #b4becc;
+    border-color: #a8c3bd;
+}
+
+a{
+    display: inline-block;
+    height: 38px;
+    padding: 0 30px;
+    color: #555;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 38px;
+    letter-spacing: .1rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    cursor: pointer;
+    box-sizing: border-box;
+}

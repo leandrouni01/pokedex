@@ -1,0 +1,147 @@
+#container{
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ grid-template-rows: 3fr 1fr 4fr;
+ grid-template-areas: 
+    "pokeinfo1 pokeinfo2"
+    "me you"
+    "poketeam1 poketeam2";
+gap: 0.5em;
+padding: 15px;
+}
+
+#pokeinfo1{
+    grid-area: pokeinfo1;
+}
+
+#pokeinfo2{
+    grid-area: pokeinfo2;
+}
+
+.pokeinfo{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 0.8fr 0.2fr 0.2fr 0.8fr;
+    grid-template-areas: 
+    "pokeimg poketypes"
+    "pokeimg abilities"
+    "pokeimg abilities"
+    "description abilities";
+    gap: 0.5rem;
+}
+
+.pokeinfo *{
+    text-align: center;
+}
+
+.pokeimg{
+    grid-area: pokeimg;
+    max-height: 12rem;
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.pokeimg img{
+    max-height: 100%;
+}
+
+.poketypes{
+    grid-area: poketypes;
+}
+
+.description{
+    grid-area: description;
+}
+
+.abilities{
+    grid-area: abilities;
+}
+
+#me{
+    grid-area: me;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 1rem;
+}
+
+#you{
+    grid-area: you;
+    max-height: 6.6rem;
+    overflow: auto;
+    padding: 3px;
+}
+
+#them div{
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+#poketeam1{
+    grid-area: poketeam1;
+}
+
+#poketeam2{
+    grid-area: poketeam2;
+}
+
+.poketeam{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-auto-rows: 1fr;
+    gap: 0.2rem;
+    width: 30%;
+    margin: 0px auto;
+}
+
+.card img{
+    height: 100%;
+    max-height: 100%;
+}
+
+#fight{
+    position: relative;
+    left: 75%;
+    width: 50%;
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4);
+    transition-duration: 1s;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  border-radius: 1rem;
+  margin: 2% auto; 
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  display: grid; 
+}
+
+.close {
+  color: #aaa;
+  float: left;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}

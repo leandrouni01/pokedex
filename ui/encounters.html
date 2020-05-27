@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="./styles/normalize.css" rel="stylesheet">
+    <link href="./styles/skeleton.css" rel="stylesheet">
+    <link href="./styles/commonStyles.css" rel="stylesheet">
+    <link href="./styles/encountersStyles.css" rel="stylesheet" >
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Encuentros</title>
+</head>
+
+<body>
+    <nav id="navbar">
+        <ul>
+            <li>Bienvenido <span id="user_name"></span></li>
+            <li><a href="./addpokemon.html">Agregar pokemon</a></li>
+            <li><a href="./pokeTeam.html">Armar Equipo</a></li>
+            <li><a href="#">Encuentros</a></li>
+            <li><button onclick="logOut()" type="button">Log out</button></li>
+        </ul>
+    </nav>
+    <main id="container">
+        <div id="pokeinfo1" class="pokeinfo">
+            <figure class="pokeimg">
+                <img src="./images/interrogacion.png" alt="Signo de interrogacion">
+            </figure>
+            <div class="poketypes">
+                <span class="pkmType None">???</span>
+                <span class="pkmType None">???</span>
+            </div>
+            <div class="description">
+                <div>Species: ???</div>
+                <div>Weight: ???</div>
+            </div>
+            <div class="abilities">
+                <div><b>Abilities</b></div>
+                <div>???</div>
+                <div>???</div>
+                <div>???</div>
+            </div>
+        </div>
+        <div id="pokeinfo2" class="pokeinfo">
+            <figure class="pokeimg">
+                <img src="./images/interrogacion.png" alt="Signo de interrogacion">
+            </figure>
+            <div class="poketypes">
+                <span class="pkmType None">???</span>
+                <span class="pkmType None">???</span>
+            </div>
+            <div class="description">
+                <div>Species: ???</div>
+                <div>Weight: ???</div>
+            </div>
+            <div class="abilities">
+                <div><b>Abilities</b></div>
+                <div>???</div>
+                <div>???</div>
+                <div>???</div>
+            </div>
+        </div>
+        <div id="me">
+            <h3>Tu Equipo</h3>
+        </div>
+        <div id="you">
+            <div id="them">
+                
+            </div>
+        </div>
+        <div id="poketeam1" class="poketeam">
+
+        </div>
+        <div id="poketeam2" class="poketeam">
+
+        </div>
+        <button id="fight" onclick="fight()" disabled>Pelear</button>
+    </main>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div id="info">
+
+            </div>
+        </div>
+    </div>
+
+    <script src="./src/encountersApp.js"></script>
+</body>
+
+</html>

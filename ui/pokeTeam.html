@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./styles/normalize.css">
+    <link rel="stylesheet" href="./styles/skeleton.css">
+    <link rel="stylesheet" href="./styles/pokeTeamStyles.css">
+    <link rel="stylesheet" href="./styles/commonStyles.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Editar Equipo</title>
+</head>
+
+<body>
+    <nav id="navbar">
+        <ul>
+            <li>Bienvenido <span id="user_name"></span></li>
+            <li><a href="./addpokemon.html">Agregar pokemon</a></li>
+            <li><a href="#">Armar Equipo</a></li>
+            <li><a href="./encounters.html">Encuentros</a></li>
+            <li><button class="btn" onclick="logOut()" type="button">Log out</button></li>
+        </ul>
+    </nav>
+    <main id="container">
+        <div id="pokeinfo">
+            <figure id="pokeimg">
+                <img src="./images/interrogacion.png" alt="Signo de interrogacion">
+            </figure>
+        </div>
+        <div id="boxname">
+            <h3>Caja de Favoritos</h3>
+        </div>
+        <div id="pokebox">
+            <div id="pokeboxgrid">
+
+            </div>
+        </div>
+        <div id="teamname">
+            <h3>Equipo Pokemon</h3>
+        </div>
+        <div id="poketeam">
+            <div id="poketeamgrid">
+                
+            </div>
+        </div>
+    </main>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span id="close" class="close">&times;</span>
+            <div id="info">
+            </div>
+        </div>
+    </div>
+    <script src="./src/pokeTeamapp.js"></script>
+</body>
+
+</html>

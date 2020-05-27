@@ -1,0 +1,180 @@
+/*body{
+    height: 100%;
+}*/
+
+#container{
+ padding: 2rem;
+ display: grid;
+ grid-template-columns: 2fr 1fr;
+ grid-template-rows: 0.5fr 0.2fr 2fr;
+ grid-template-areas: 
+    "pokeinfo pokeinfo"
+    "boxname teamname"
+    "pokebox poketeam";   
+ gap: 0.5rem;
+}
+
+#pokeinfo{
+    grid-area: pokeinfo;
+    display: grid;
+    grid-template-columns: 5fr 5fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 
+        "pokeimg buttoninfo"
+        "pokeimg buttonadd";
+    gap: 0.2rem;
+    max-height: 15rem;
+}
+
+#pokeimg{
+    grid-area: pokeimg;
+    text-align: center;
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+#pokeimg img{
+    max-height: 100%;
+    border: 1px solid black;
+}
+
+#buttoninfo{
+    grid-area: buttoninfo;
+}
+
+h3{
+    text-align: center;
+}
+
+#butonadd{
+    grid-area: buttonadd;
+}
+
+#boxname{
+    grid-area: boxname;
+}
+
+#teamname{
+    grid-area: teamname;
+}
+
+#pokebox{
+    grid-area: pokebox;
+    max-height: 63rem;
+    overflow: auto;
+}
+
+#pokeboxgrid{
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: 1fr;
+    grid-auto-rows: 1fr;
+    gap: 0.3rem;
+    padding: 3px;
+}
+
+#poketeam{
+    grid-area: poketeam;
+}
+
+#poketeamgrid{
+    display: grid;
+    width: 70%;
+    height: 50%;
+    margin: 0pc auto;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-auto-rows: 1fr;
+    gap: 0.3rem;
+    padding: 3px;
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4);
+    transition-duration: 1s;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  border-radius: 1rem;
+  margin: 2% auto; 
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  display: grid; 
+}
+
+.close {
+  color: #aaa;
+  float: left;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#info{
+    width: 97%;
+    padding: 1.4%;
+    overflow: auto;
+    grid-area: pokeinfo;
+    gap: 0.2rem;
+    display: grid;
+    grid-template-columns: 4fr 6fr;
+    grid-template-rows: 6fr 1fr 2fr;
+    grid-template-areas: 
+        "imgPkmnInfo imgPkmnInfo"
+        "pkmnDescription types"
+        "pkmnDescription abilities";
+}
+
+#CImgPkmnInfo{
+    width: 70%;
+    margin: 0px auto;
+    grid-area: imgPkmnInfo;
+}
+
+#imgPkmnInfo{
+    width: 100%;
+}
+
+#pkmnDescription{
+    grid-area: pkmnDescription;
+}
+
+#pkmnDescription *{
+    text-align: center;
+}
+
+#types{
+    grid-area: types;
+    text-align: center;
+}
+
+#abilities{
+    grid-area: abilities;
+}
+
+#abilities> *{
+    text-align: center;
+}
+
+#manage{
+    grid-area: manage;
+}
